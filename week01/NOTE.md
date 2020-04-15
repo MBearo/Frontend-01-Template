@@ -1,1 +1,305 @@
-# 每周总结可以写在这里
+# 总结
+
+## 知识框架
+
+前端技术
+
+* HTML
+  * HTML as 通用的计算机语言
+    * 语法
+    * 词法
+  * HTML as SGML
+    * DTD
+    * Entity
+      * HTMLlat1
+      * HTMLsymbol
+      * HTMLspecial
+      * ContentType
+      * ContentTypes
+      * Charset
+      * Charsets
+      * LanguageCode
+      * Character
+      * Number
+      * LinkTypes
+      * MediaDesc
+      * URI
+      * UriList
+      * Datetime
+      * Script
+      * StyleSheet
+      * Text
+      * Length
+      * MultiLength
+      * Pixels
+      * Shape
+      * Coords
+  * HTML as XML
+    * Namespace
+      * svg
+      * mathml
+      * aria
+    * Tag
+      * html
+      * head
+      * title
+      * base
+      * link
+      * meta
+      * style
+      * body
+      * article
+      * section
+      * nav
+      * aside
+      * h1
+      * h2
+      * h3
+      * h4
+      * h5
+      * h6
+      * hgroup
+      * header
+      * footer
+      * address
+      * p
+      * hr
+      * pre
+      * blockquote
+      * ol
+      * ul
+      * menu
+      * li
+      * dl
+      * dt
+      * dd
+      * figure
+      * figcaption
+      * main
+      * div
+      * em
+      * strong
+      * small
+      * s
+      * cite
+      * q
+      * dfn
+      * abbr
+      * ruby
+      * rt
+      * rp
+      * data
+      * time
+      * code
+      * var
+      * samp
+      * kdb
+      * sub
+      * sup
+      * i
+      * b
+      * u
+      * mark
+      * bdi
+      * bdo
+      * span
+      * br
+      * wbr
+      * a
+      * area
+      * ins
+      * del
+      * picture
+      * source
+      * img
+      * iframe
+      * embed
+      * object
+      * param
+      * video
+      * audio
+      * track
+      * map
+      * table
+      * caption
+      * colgroup
+      * col
+      * tbody
+      * thead
+      * tfoot
+      * tr
+      * td
+      * th
+      * form
+      * label
+      * input
+      * button
+      * select
+      * datalist
+      * optgroup
+      * option
+      * textarea
+      * output
+      * progress
+      * meter
+      * fieldset
+      * lengend
+      * details
+      * summary
+      * dialog
+      * script
+      * noscript
+      * template
+      * slot
+      * canvas
+* CSS
+  * 语法/词法
+  * @规则
+  * 普通规则
+    * 选择器
+      * 简单选择器
+        * .class
+        * #id
+        * tagname
+        * \*
+        * [attr=v]
+      * 复合选择器
+        * 后代选择器
+        * 子代选择器
+        * 交集选择器
+        * 并集选择器
+        * 链接伪类选择器
+      * 复杂选择器
+        * 父子选择器或派生选择器
+        * 直接子元素选择器
+        * 并列选择器
+        * 分组选择器
+      * 选择器列表
+    * Property
+    * Value
+  * 机制
+    * 排版
+      * Flex
+        * flex
+        * flex-basis
+        * flex-direction
+        * flex-flow
+        * flex-grow
+        * flex-shrink
+        * flex-wrap
+        * order
+      * Grid
+        * grid
+        * grid-area
+        * grid-auto-columns
+        * grid-auto-flow
+        * grid-auto-rows
+        * grid-column
+        * grid-column-end
+        * grid-column-gap
+        * grid-column-start
+        * grid-gap
+        * grid-row
+        * grid-row-end
+        * grid-row-gap
+        * grid-row-start
+        * grid-template
+        * grid-template-areas
+        * grid-template-columns
+        * grid-template-rows
+    * 伪元素
+      * ::after(:after)
+      * ::backdrop
+      * ::before(:before)
+      * ::cue(:cue)
+      * ::first-letter(:first-letter)
+      * ::first-line(first-line)
+      * ::grammar-error
+      * ::marker
+      * ::placeholder
+      * ::selection
+      * ::slotted
+      * ::spelling-error
+    * 动画
+      * animation
+      * animation-delay
+      * animation-direction
+      * animation-duration
+      * animation-fill-mode
+      * animation-iteration-count
+      * animation-name
+      * animation-play-state
+      * animation-timing-function
+    * 优先级
+      * ID 选择器
+      * 类选择器
+      * 属性选择器
+      * 伪类
+      * 类型选择器
+      * 伪元素
+* JS
+  * Grammar
+    * Lex
+      * WhiteSpace
+      * LineTerminator
+      * Comment
+      * Token
+        * Identifier(标识符)
+        * Keywords
+        * Punctuator(符号)
+        * NumericLiteral
+        * StringLiteral
+        * RegularExpressionLiteral
+        * Template
+    * Syntax
+      * Atom
+      * Expression
+      * Structure
+      * Script & Module
+  * 语义(Semantics)
+  * 运行时(Runtime)
+    * Type
+      * Number
+      * String
+      * Boolean
+      * Undefined
+      * Null
+      * Symbol
+      * Object
+      * 内部类型
+        * Referece
+        * Completion Record
+    * 执行过程
+      * Job
+      * Script/Module
+      * Promise
+      * Function
+      * Statement
+      * Expression
+      * Literal
+      * Identifier
+* API
+
+## ECMA类型
+
+Language Types
+
+* Undefined
+* Null
+* Boolean
+* String
+* Symbol
+* Number
+* Object
+
+Specification Types
+
+* List
+* Set
+* Completion
+* Reference
+* Property Descriptor
+* Lexical Environment
+* Environment Record
+* abstract closure
+* Data Block
