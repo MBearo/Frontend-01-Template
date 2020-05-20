@@ -1,10 +1,6 @@
-const net = require('net');
+const net = require('net')
 
 class Request {
-  // method, url = host + port + path
-  // body: k/v
-  // headers
-
   constructor(options) {
     this.method = options.method || 'GET';
     this.host = options.host;
@@ -12,7 +8,6 @@ class Request {
     this.port = options.port || 80;
     this.body = options.body || {};
     this.headers = options.headers || {};
-
 
     if (!this.headers['Content-Type']) {
       this.headers['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -30,52 +25,43 @@ class Request {
         .join('&');
       this.headers['Content-Length'] = this.bodyText.length;
     }
-    // console.log(this.toString());
+    //console.log(this.toString());
   }
-
   toString() {
     return [
       `${this.method} ${this.path} HTTP/1.1`,
       `Host: ${this.host}`,
       `${Object.entries(this.headers).map(([k, v]) => `${k}: ${v}`).join('\r\n')}`,
       '',
-      '',
-      `${this.bodyText}`,
-      ''
+      `${this.bodyText}`
     ].join('\r\n')
-    // return `${this.method} ${this.path} HTTP/1.1\r\nHost: 127.0.0.1\r\n${Object.keys(this.headers)
-    //   .map((key) => `${key}: ${this.headers[key]}`)
-    //   .join('\r\n')}\r\n\r\n${this.bodyText}\r\n\r\n`;
-    //return `${this.method} ${this.path} HTTP/1.1\r\nHOST: ${this.host}\r\n${Object.keys(this.headers).map(key => `${key}: ${this.headers[key]}`).join('\r\n')}\r\n\r\n${this.bodyText}\r\n`
   }
-
   send(connection) {
     return new Promise((resolve, reject) => {
       const parse = new ResponseParser();
-      if (connection) {
+      connection = net.createConnection({
+        host: this.host,
+        port: this.port,
+      }, () => {
         connection.write(this.toString())
-      } else {
-        connection = net.createConnection({
-          host: this.host,
-          port: this.port,
-        }, () => {
-          connection.write(this.toString())
-        })
-      }
+      })
       connection.on('data', (data) => {
         parse.receive(data.toString());
         if (parse.isFinished) {
           resolve(parse.response);
         }
         connection.end();
+
       });
       connection.on('error', (err) => {
+        console.log('error');
         reject(err);
         connection.end();
       });
     })
   }
 }
+
 class ResponseParser {
   constructor() {
     this.WAITING_STATUS_LINE = 0;
@@ -94,7 +80,6 @@ class ResponseParser {
     this.headerValue = "";
     this.bodyParse = null;
   }
-
   get isFinished() {
     return this.bodyParse && this.bodyParse.isFinished
   }
@@ -108,7 +93,6 @@ class ResponseParser {
       body: this.bodyParse.content.join('')
     }
   }
-  // 字符流处理
   receive(string) {
     for (let i = 0; i < string.length; i++) {
       this.receiveChar(string.charAt(i));
@@ -134,8 +118,11 @@ class ResponseParser {
         this.current = this.WAITING_HEADER_SPACE
       } else if (char === '\r') {
         this.current = this.WAITING_HEADER_BLOCK_END
-        if (this.headers['Transfer-Encoding'] === 'chunked')
+        if (this.headers['Transfer-Encoding'] === 'chunked') {
           this.bodyParse = new TrunkedBodyParser();
+        } else {
+          this.bodyParse = new TrunkedBodyParser();
+        }
       } else {
         this.headerName += char
       }
@@ -171,11 +158,11 @@ class ResponseParser {
     }
 
     else if (this.current === this.WAITING_BODY) {
+      //console.log('WAITING_BODY', char);
       this.bodyParse.receiveChar(char)
     }
   }
 }
-
 
 class TrunkedBodyParser {
   constructor() {
@@ -201,8 +188,9 @@ class TrunkedBodyParser {
           this.current = this.WAITING_LENGTH_LINE_END
         }
       } else {
-        this.length *= 10
-        this.length += char.charCodeAt(0) - '0'.charCodeAt(0)
+        this.length *= 16
+        //console.log('r:',this.length);
+        this.length += parseInt(char, 16)
       }
     }
 
@@ -245,22 +233,4 @@ class TrunkedBodyParser {
     }
   }
 }
-
-void async function () {
-  const options = {
-    method: "GET",
-    path: "/",
-    host: "127.0.0.1",
-    port: 8088,
-    body: {
-      name: "哈哈哈"
-    }
-  }
-
-  let request = new Request(options)
-
-  let response = await request.send()
-  console.log(response)
-}()
-
-
+module.exports = Request
