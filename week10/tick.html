@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #app {
+      display: flex;
+      width: 100px;
+      flex-wrap: wrap;
+    }
+
+    .cell {
+      height: 30px;
+      width: 30px;
+      background-color: #ccc;
+      margin: 0 2px 2px 0;
+      text-align: center;
+      line-height: 30px;
+    }
+
+    .cell.x::after {
+      content: 'x';
+    }
+
+    .cell.o::after {
+      content: 'o';
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+
+  </div>
+  <script>
+    let color = 1
+    const pattern = [
+      [0, 0, 0],
+      [0, 0, 0],
+      [0, 0, 0],
+    ]
+    function show(pattern) {
+      const app = document.querySelector('#app')
+      app.innerHTML = ''
+      pattern.forEach((col, x) => {
+        col.forEach((item, y) => {
+          const cell = document.createElement('div')
+          cell.classList.add('cell')
+          if (item === 1) {
+            cell.classList.add('x')
+          } else if (item === 2) {
+            cell.classList.add('o')
+          }
+          cell.addEventListener('click', () => move(x, y))
+          app.appendChild(cell)
+        })
+      })
+    }
+    function move(x, y) {
+      pattern[x][y] = color
+      show(pattern)
+      setTimeout(_ => {
+        if (check(pattern, color)) {
+          alert(color)
+        }
+        color = 3 - color
+      })
+
+    }
+    function check(pattern, color) {
+
+      for (let y = 0; y < 3; y++) {
+        let win = true
+        for (let x = 0; x < 3; x++) {
+          if (pattern[x][y] !== color) {
+            win = false
+          }
+        }
+        if (win) return true
+      }
+
+
+      for (let y = 0; y < 3; y++) {
+        let win = true
+        for (let x = 0; x < 3; x++) {
+          if (pattern[x][y] !== color) {
+            win = false
+          }
+        }
+        if (win) return true
+      }
+
+      {
+        let win = true
+        for (let y = 0; y < 3; y++) {
+          if (pattern[y][y] !== color) {
+            win = false
+          }
+        }
+        if (win) return true
+      }
+      {
+        let win = true
+        for (let y = 0; y < 3; y++) {
+          if (pattern[y][2 - y] !== color) {
+            win = false
+          }
+        }
+        if (win) return true
+      }
+      return false
+    }
+    function willWin(pattern, color) {
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+          if (pattern[i][j] !== 0) {
+            continue
+            let tmp = clone(pattern)
+            tmp[i][j] = color
+            if (check(tmp, color)) {
+              return true
+            }
+          }
+        }
+      }
+      return false
+    }
+    function clone(pattern) {
+      return JSON.parse(JSON.stringify(pattern))
+    }
+    show(pattern)
+  </script>
+</body>
+
+</html>
