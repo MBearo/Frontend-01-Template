@@ -1,0 +1,15 @@
+<template>
+  <div>
+    <img/>
+  </div>
+</template><script>
+  el:'#example',
+  data:{
+    message:'Hello'
+  },
+  computed:{
+    reversedMessage:function(){
+      return this.message.split('').reverse().join('')
+    }
+  }
+</script>
